@@ -159,4 +159,8 @@ default: @""
 // Init
 - (instancetype _Nullable )initWithCodeLength:(NSInteger)codeLength;
 
+- (void)reloadErrorView;
+
+- (void)reloadNormalView;
 @end
+

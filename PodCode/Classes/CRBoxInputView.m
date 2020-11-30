@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, CRBoxTextChangeType) {
 @property (nonatomic, strong) UICollectionView *mainCollectionView;
 @property (nonatomic, strong) NSMutableArray <NSString *> *valueArr;
 @property (nonatomic, strong) NSMutableArray <CRBoxInputCellProperty *> *cellPropertyArr;
-
+@property (nonatomic, assign) BOOL isError;
 @end
 
 @implementation CRBoxInputView
@@ -125,6 +125,8 @@ typedef NS_ENUM(NSInteger, CRBoxTextChangeType) {
 {
     [self loadAndPrepareViewWithBeginEdit:YES];
 }
+
+
 
 - (void)loadAndPrepareViewWithBeginEdit:(BOOL)beginEdit
 {
@@ -467,6 +469,13 @@ typedef NS_ENUM(NSInteger, CRBoxTextChangeType) {
         
         // CellProperty
         CRBoxInputCellProperty *cellProperty = self.cellPropertyArr[indexPath.row];
+        if (self.isError) {
+            cellProperty.cellBgColorNormal = [UIColor whiteColor];
+            cellProperty.cellBorderColorNormal = [UIColor redColor];
+        }else{
+            cellProperty.cellBgColorNormal = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
+            cellProperty.cellBorderColorNormal = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
+        }
         cellProperty.index = indexPath.row;
         
         NSString *currentPlaceholderStr = nil;
@@ -641,4 +650,13 @@ typedef NS_ENUM(NSInteger, CRBoxTextChangeType) {
     });
 }
 
+- (void)reloadErrorView{
+    self.isError = YES;
+    [self.mainCollectionView reloadData];
+}
+
+- (void)reloadNormalView{
+    self.isError = NO;
+    [self.mainCollectionView reloadData];
+}
 @end
